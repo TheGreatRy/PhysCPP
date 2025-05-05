@@ -36,11 +36,15 @@ int main ()
 	camera.zoom = 1;*/
 
 	TrigScene* scene = new TrigScene("trig", windowWidth, windowHeight);
+	scene->Initialize();
 
 	// game loop
-	while (!WindowShouldClose())		// run the loop until the user presses ESCAPE or presses the Close button on the window
+	while (!WindowShouldClose())		// run the loop untill the user presses ESCAPE or presses the Close button on the window
 	{
-		
+		scene->Update();
+		scene->BeginDraw();
+		scene->Draw();
+		scene->EndDraw();
 	}
 
 	// cleanup
