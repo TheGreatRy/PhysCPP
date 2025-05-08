@@ -1,13 +1,14 @@
 #pragma once
 #include "scene.h"
-class TrigScene : public Scene
+
+class VectorScene : public Scene
 {
 public:
 
-	TrigScene(const std::string& title, int width, int height, const Color& background = BLACK) : 
+	VectorScene(const std::string& title, int width, int height, const Color& background = BLACK) :
 		Scene{ title, width, height, background }
 	{
-	//
+		//
 	}
 
 	// Inherited via Scene
@@ -16,4 +17,6 @@ public:
 	void Draw() override;
 	void DrawGUI() override;
 private:
+	struct Body* m_head{ nullptr };
+	struct Body* m_player{ nullptr };
 };

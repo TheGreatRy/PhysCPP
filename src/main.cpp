@@ -12,6 +12,8 @@ by Jeffery Myers is marked with CC0 1.0. To view a copy of this license, visit h
 #include "resource_dir.h"	// utility header for SearchAndSetResourceDir
 #include "scene.h"
 #include "trig_scene.h"
+#include "vector_scene.h"
+#include "polar_scene.h"
 
 int main ()
 {
@@ -35,7 +37,9 @@ int main ()
 	camera.rotation = 0;
 	camera.zoom = 1;*/
 
-	TrigScene* scene = new TrigScene("trig", windowWidth, windowHeight);
+	//TrigScene* scene = new TrigScene("Trig", windowWidth, windowHeight);
+	//VectorScene* scene = new VectorScene("Vector", windowWidth, windowHeight);
+	PolarScene* scene = new PolarScene("Polar", windowWidth, windowHeight);
 	scene->Initialize();
 
 	// game loop
