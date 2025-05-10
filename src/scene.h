@@ -1,11 +1,12 @@
 #pragma once
 #include "raylib.h"
 #include "scene_camera.h"
+#include "world.h"
 #include <string>
 
 class Scene
 {
-friend struct Body;
+	friend struct Body;
 public:
 	Scene(const std::string& title, int width, int height, const Color& background = BLACK);
 	Scene() {}
@@ -23,7 +24,7 @@ public:
 
 	void SetCamera(SceneCamera* camera) { m_camera = camera; }
 	SceneCamera* GetCamera() { return m_camera; }
-	
+
 protected:
 	void DrawGrid(float slices, float thickness, const Color& color) const;
 	void DrawText(const std::string& text, const Vector2& world, int fontSize, const Color& color) const;
@@ -36,4 +37,5 @@ protected:
 	Color m_background{ WHITE };
 
 	SceneCamera* m_camera{ nullptr };
+	World* m_world{ nullptr };
 };

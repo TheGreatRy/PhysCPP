@@ -1,9 +1,11 @@
 #include "body.h"
 #include "raymath.h"
 
-void Body::Step(float scale)
+void Body::Step(float dt)
 {
-	position += velocity * scale;
+	position += velocity * dt;
+
+	velocity *= 1.0f / 1.0f + (0.1f * dt);
 }
 
 void Body::Draw(const Scene& scene)

@@ -1,16 +1,20 @@
 #include "vector_scene.h"
 #include "body.h"
+#include "math_utils.h"
 #include "raymath.h"
 
-float randf()
-{
-	return rand() / (float)RAND_MAX;
-}
+
 void VectorScene::Initialize()
 {
 
 	m_camera = new SceneCamera(Vector2{ m_width / 2.0f, m_height / 2.0f });
-	Body* body = new Body(Vector2{ 3,0 }, Vector2{ 0 }, 0.25, WHITE);
+	m_world = new World();
+	m_world->Initialize();
+
+	#pragma region Enemies
+
+
+	/*Body* body = new Body(Vector2{ 3,0 }, Vector2{ 0 }, 0.25, WHITE);
 	m_head = body;
 	m_player = m_head;
 
@@ -19,15 +23,18 @@ void VectorScene::Initialize()
 		Body* newBody = new Body(Vector2{ randf() * 5.0f, randf() * 5.0f }, Vector2{0}, 0.25, RED);
 		body->next = newBody;
 		body = newBody;
-	}
+	}*/
+#pragma endregion
 	
 }
 
 void VectorScene::Update()
 {
 	float dt = GetFrameTime();
+ 
+	#pragma region PlayerInput
 
-	Vector2 input{ 0 };
+	/*Vector2 input{ 0 };
 
 	if (IsKeyDown(KEY_A)) input.x = -1;
 	if (IsKeyDown(KEY_D)) input.x = 1;
@@ -53,7 +60,32 @@ void VectorScene::Update()
 		body->velocity = direction;
 		body->Step(dt);
 		body = body->next;
+	}*/
+#pragma endregion
+
+	if (IsMouseButtonDown(0))
+	{
+		Vector2 position = m_camera->ScreenToWorld(GetMousePosition());
+		for (int i = 0; i < 100; i++)
+		{
+			Body* body = m_world->CreateBody(position, 0.05f, ColorFromHSV(randomf(360), 1, 1));
+			float theta = randomf(0, 360);
+			//standard fireworks
+			/*float x = cosf(theta);
+			float y = sin(theta);*/
+
+			//spread fireworks
+			float x = cosf(theta) + position.x;
+			float y = sinf(theta) + position.y;
+			
+			//linear line fireworks
+			/*float x = position.x;
+			float y = position.y;*/
+			body->velocity = Vector2{ x, y } * randomf(1,6);
+		}
 	}
+
+	m_world->Step(dt);
 }
 
 void VectorScene::Draw()
@@ -63,14 +95,14 @@ void VectorScene::Draw()
 	//Grid!
 	DrawGrid(10, 5, DARKGRAY);
 
-	Body* body = m_head;
+	/*Body* body = m_head;
 	while (body)
 	{
 		
 		body->Draw(*this);
 		body = body->next;
-	}
-
+	}*/
+	m_world->Draw(*this);
 
 	m_camera->EndMode();
 }
