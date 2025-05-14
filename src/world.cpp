@@ -1,6 +1,8 @@
 #include "world.h"
 #include "body.h"
 
+Vector2 World::m_gravity{ 0.0f, -9.81f };
+
 World::~World()
 {
 
@@ -8,7 +10,7 @@ World::~World()
 
 void World::Initialize(Vector2 gravity, size_t poolSize)
 {
-    m_gravity = gravity;
+    World::m_gravity = gravity;
     m_bodies.reserve(poolSize);
 }
 
@@ -24,7 +26,7 @@ void World::Step(float timeStep)
     for (auto body : m_bodies)
     {
         body->Step(timeStep);
-
+        body->ClearForce();
     }
 }
 

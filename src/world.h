@@ -13,8 +13,9 @@ public:
 	void Step(float timeStep);
 	void Draw(const class Scene& scene);
 	void DestroyAll();
+	std::vector<Body*>& GetBodies(){ return m_bodies; }
 
+	static Vector2 m_gravity;
 private:
-	Vector2 m_gravity{ 0 };
 	std::vector<Body*> m_bodies;
 };

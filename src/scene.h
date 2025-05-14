@@ -17,6 +17,7 @@ public:
 
 	virtual void BeginDraw();
 	virtual void EndDraw();
+	virtual void FixedUpdate() = 0;
 	virtual void Draw() = 0;
 	virtual void DrawGUI() = 0;
 
@@ -25,6 +26,7 @@ public:
 	void SetCamera(SceneCamera* camera) { m_camera = camera; }
 	SceneCamera* GetCamera() { return m_camera; }
 
+	static constexpr float fixedTimeStep{ 1.0f / 60.0f };
 protected:
 	void DrawGrid(float slices, float thickness, const Color& color) const;
 	void DrawText(const std::string& text, const Vector2& world, int fontSize, const Color& color) const;

@@ -17,6 +17,7 @@ by Jeffery Myers is marked with CC0 1.0. To view a copy of this license, visit h
 
 int main ()
 {
+	float timeAcumm = 0;
 	int windowWidth = 1280;
 	int windowHeight = 720;
 	// Tell the window to use vsync and work on high DPI displays
@@ -46,6 +47,12 @@ int main ()
 	while (!WindowShouldClose())		// run the loop untill the user presses ESCAPE or presses the Close button on the window
 	{
 		scene->Update();
+		timeAcumm += GetFrameTime();
+		while (timeAcumm >= Scene::fixedTimeStep)
+		{
+			scene->FixedUpdate();
+			timeAcumm -= Scene::fixedTimeStep;
+		}
 		scene->BeginDraw();
 		scene->Draw();
 		scene->EndDraw();

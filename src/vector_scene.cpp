@@ -63,7 +63,7 @@ void VectorScene::Update()
 	}*/
 #pragma endregion
 
-	if (IsMouseButtonDown(0))
+	if (IsMouseButtonPressed(0))
 	{
 		Vector2 position = m_camera->ScreenToWorld(GetMousePosition());
 		for (int i = 0; i < 100; i++)
@@ -71,21 +71,47 @@ void VectorScene::Update()
 			Body* body = m_world->CreateBody(position, 0.05f, ColorFromHSV(randomf(360), 1, 1));
 			float theta = randomf(0, 360);
 			//standard fireworks
-			/*float x = cosf(theta);
-			float y = sin(theta);*/
+			float x = cosf(theta);
+			float y = sin(theta);
 
 			//spread fireworks
-			float x = cosf(theta) + position.x;
-			float y = sinf(theta) + position.y;
-			
+			/*float x = cosf(theta) + position.x;
+			float y = sinf(theta) + position.y;*/
+
 			//linear line fireworks
 			/*float x = position.x;
 			float y = position.y;*/
-			body->velocity = Vector2{ x, y } * randomf(1,6);
+			body->velocity = Vector2{ x, y } * randomf(1, 6);
 		}
 	}
 
-	m_world->Step(dt);
+	//apply collision
+	for (auto body : m_world->GetBodies())
+	{
+		if (body->position.y < -5)
+		{
+			body->position.y = -5;
+			body->velocity.y *= -1;
+		}
+		if (body->position.x < -9)
+		{
+			body->position.x = -9;
+			body->velocity.x *= -1;
+		}
+		if (body->position.x > 9)
+		{
+			body->position.x = 9;
+			body->velocity.x *= -1;
+		}
+		
+	}
+}
+
+void VectorScene::FixedUpdate()
+{
+	//apply forces
+	m_world->Step(Scene::fixedTimeStep);
+
 }
 
 void VectorScene::Draw()
