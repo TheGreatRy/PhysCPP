@@ -7,9 +7,9 @@ struct Body
 public:
 	enum class Type
 	{
+		Dynamic,
 		Static,
-		Kinematic,
-		Dynamic
+		Kinematic
 	};
 public:
 	friend class Scene;

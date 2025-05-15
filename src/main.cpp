@@ -55,6 +55,7 @@ int main ()
 		}
 		scene->BeginDraw();
 		scene->Draw();
+		scene->DrawGUI();
 		scene->EndDraw();
 	}
 
