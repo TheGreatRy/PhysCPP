@@ -1,5 +1,4 @@
-#include "vector_scene.h"
-#include "body.h"
+#include "spring_scene.h"
 #include "math_utils.h"
 #include "raymath.h"
 #include "raygui.h"
@@ -7,7 +6,7 @@
 #include "gui.h"
 
 
-void VectorScene::Initialize()
+void SpringScene::Initialize()
 {
 
 	m_camera = new SceneCamera(Vector2{ m_width / 2.0f, m_height / 2.0f });
@@ -32,10 +31,12 @@ void VectorScene::Initialize()
 	Vector2 windowAnchor = { 96, 48 };
 }
 
-void VectorScene::Update()
+void SpringScene::Update()
 {
 	GUI::Update();
 	float dt = GetFrameTime();
+	
+	if (IsKeyPressed(KEY_SPACE)) World::simulate = !World::simulate;
 
 #pragma region PlayerInput
 
@@ -68,36 +69,45 @@ void VectorScene::Update()
 	}*/
 #pragma endregion
 
-	if (IsMouseButtonPressed(0) && !GUI::mouseOverGui)
+	if (!GUI::mouseOverGui)
 	{
-
-		//change value to take in menu options
-		Vector2 position = m_camera->ScreenToWorld(GetMousePosition());
-		for (int i = 0; i < 100; i++)
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 		{
-			Body* body = m_world->CreateBody(position, 0.05f, ColorFromHSV(randomf(360), 1, 1));
-			float theta = randomf(0, 360);
+			//change value to take in menu options
+			Vector2 position = m_camera->ScreenToWorld(GetMousePosition());
+			for (int i = 0; i < 100; i++)
+			{
+				Body* body = m_world->CreateBody(position, 0.05f, ColorFromHSV(randomf(360), 1, 1));
+				float theta = randomf(0, 360);
 
-			body->type = Body::Type{ GUI::bodyTypeOptions };
-			//standard fireworks
-			float x = cosf(theta);
-			float y = sin(theta);
+				body->type = Body::Type{ GUI::bodyTypeOptions };
+				//standard fireworks
+				float x = cosf(theta);
+				float y = sin(theta);
 
-			//spread fireworks
-			/*float x = cosf(theta) + position.x;
-			float y = sinf(theta) + position.y;*/
+				//spread fireworks
+				/*float x = cosf(theta) + position.x;
+				float y = sinf(theta) + position.y;*/
 
-			//linear line fireworks
-			/*float x = position.x;
-			float y = position.y;*/
-			body->velocity = Vector2{ x, y } *randomf(1, 6);
-			body->mass = GUI::bodyMass;
-			//body->gravityScale = bodyGravity;
-			body->damping = GUI::bodyDamping;
-			body->size = GUI::bodySize;
+				//linear line fireworks
+				/*float x = position.x;
+				float y = position.y;*/
+				body->velocity = Vector2{ x, y } *randomf(1, 6);
+				body->mass = GUI::bodyMass;
+				//body->gravityScale = bodyGravity;
+				body->damping = GUI::bodyDamping;
+				body->size = GUI::bodySize;
 
-			m_world->gravity.y = GUI::worldGravity;
+				m_world->gravity.y = GUI::worldGravity;
+			}
 		}
+
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+		{
+			Vector2 position = m_camera->ScreenToWorld(GetMousePosition());
+			m_selectedBody = GUI::GetBodyIntersect(position, m_world->GetBodies(), *m_camera);
+		}
+
 	}
 
 	
@@ -126,7 +136,7 @@ void VectorScene::Update()
 
 }
 
-void VectorScene::FixedUpdate()
+void SpringScene::FixedUpdate()
 {
 	//apply forces
 	m_world->Step(Scene::fixedTimeStep);
@@ -134,26 +144,20 @@ void VectorScene::FixedUpdate()
 	ApplyGravitation(m_world->GetBodies(), GUI::bodyGravity);
 }
 
-void VectorScene::Draw()
+void SpringScene::Draw()
 {
 	m_camera->BeginMode();
 
 	//Grid!
 	DrawGrid(10, 5, DARKGRAY);
 
-	/*Body* body = m_head;
-	while (body)
-	{
-
-		body->Draw(*this);
-		body = body->next;
-	}*/
 	m_world->Draw(*this);
+	if (m_selectedBody) DrawCircleLine(m_selectedBody->position, m_selectedBody->size, YELLOW, 5);
 
 	m_camera->EndMode();
 }
 
-void VectorScene::DrawGUI()
+void SpringScene::DrawGUI()
 {
 	GUI::Draw();
 }

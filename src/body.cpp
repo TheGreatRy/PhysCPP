@@ -1,4 +1,5 @@
 #include "body.h"
+#include "world.h"
 #include "integrator.h"
 #include "raymath.h"
 
@@ -6,7 +7,7 @@ void Body::Step(float dt)
 {
 	if (type != Type::Dynamic) return;
 
-	force += (World::m_gravity * gravityScale) * mass;
+	force += (World::gravity * gravityScale) * mass;
 	acceleration = (force * invMass);
 	
 	SemiImplicitIntegration(*this, dt);

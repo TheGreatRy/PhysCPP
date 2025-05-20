@@ -1,7 +1,5 @@
 #include "world.h"
-#include "body.h"
-
-Vector2 World::m_gravity{ 0.0f, -9.81f };
+#include "gravitation.h"
 
 World::~World()
 {
@@ -10,7 +8,7 @@ World::~World()
 
 void World::Initialize(Vector2 gravity, size_t poolSize)
 {
-    World::m_gravity = gravity;
+    World::gravity = gravity;
     m_bodies.reserve(poolSize);
 }
 
@@ -21,8 +19,19 @@ Body* World::CreateBody(const Vector2& position, float size, const Color& color)
     return body;
 }
 
+Body* World::CreateBody(const Body::Type& type, const Vector2& position,float mass, float size, const Color& color)
+{
+    Body* body = new Body(type, position, mass, size, color);
+    m_bodies.push_back(body);
+    return body;
+}
+
 void World::Step(float timeStep)
 {
+    if (!simulate) return;
+
+    if (gravitation > 0 ) ApplyGravitation(m_bodies, gravitation);
+    
     for (auto body : m_bodies)
     {
         body->Step(timeStep);

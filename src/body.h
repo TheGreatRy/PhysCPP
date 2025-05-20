@@ -25,7 +25,7 @@ public:
 		size{size},
 		color{color}
 	{}
-	Body(Type type, const Vector2& position, float mass, float size, const Color& color):
+	Body(const Type& type, const Vector2& position, float mass, float size, const Color& color):
 		type{type},
 		position{position},
 		mass{mass},
