@@ -8,7 +8,7 @@ public:
 	static void Update();
 	static void Draw();
 
-	static struct Body* GetBodyIntersect(const Vector2& position, const bodies_t& bodies, const SceneCamera& camera);
+	static Body* GetBodyIntersect(const Vector2& position, const bodies_t& bodies, const SceneCamera& camera);
 public:
 	inline static Vector2 windowAnchor{ 96, 48 };
 	inline static bool mouseOverGui{ false };

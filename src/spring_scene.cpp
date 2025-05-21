@@ -38,35 +38,6 @@ void SpringScene::Update()
 	
 	if (IsKeyPressed(KEY_SPACE)) World::simulate = !World::simulate;
 
-#pragma region PlayerInput
-
-	/*Vector2 input{ 0 };
-
-	if (IsKeyDown(KEY_A)) input.x = -1;
-	if (IsKeyDown(KEY_D)) input.x = 1;
-	if (IsKeyDown(KEY_S)) input.y = -1;
-	if (IsKeyDown(KEY_W)) input.y = 1;
-	input = Vector2Normalize(input);
-	m_player->velocity = input * 3;
-
-	Body* body = m_head;
-	while (body)
-	{
-		if (body == m_player)
-		{
-
-			body->Step(dt);
-			body = body->next;
-			continue;
-		}
-
-		Vector2 direction = m_player->position - body->position;
-		direction = Vector2Normalize(direction);
-
-		body->velocity = direction;
-		body->Step(dt);
-		body = body->next;
-	}*/
 #pragma endregion
 
 	if (!GUI::mouseOverGui)
@@ -102,15 +73,13 @@ void SpringScene::Update()
 			}
 		}
 
-		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+		if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
 		{
 			Vector2 position = m_camera->ScreenToWorld(GetMousePosition());
 			m_selectedBody = GUI::GetBodyIntersect(position, m_world->GetBodies(), *m_camera);
 		}
 
 	}
-
-	
 
 	//apply collision
 	for (auto body : m_world->GetBodies())

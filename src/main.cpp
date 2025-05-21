@@ -40,8 +40,8 @@ int main ()
 	camera.zoom = 1;*/
 
 	//TrigScene* scene = new TrigScene("Trig", windowWidth, windowHeight);
-	VectorScene* scene = new VectorScene("Vector", windowWidth, windowHeight);
-	//SpringScene* scene = new SpringScene("Vector", windowWidth, windowHeight);
+	//VectorScene* scene = new VectorScene("Vector", windowWidth, windowHeight);
+	SpringScene* scene = new SpringScene("Spring", windowWidth, windowHeight);
 
 	//PolarScene* scene = new PolarScene("Polar", windowWidth, windowHeight);
 	scene->Initialize();

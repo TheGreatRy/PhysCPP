@@ -34,8 +34,8 @@ void VectorScene::Initialize()
 
 void VectorScene::Update()
 {
-	GUI::Update();
 	float dt = GetFrameTime();
+	GUI::Update();
 
 #pragma region PlayerInput
 
@@ -67,6 +67,8 @@ void VectorScene::Update()
 		body = body->next;
 	}*/
 #pragma endregion
+
+	if (IsKeyPressed(KEY_SPACE)) World::simulate = !World::simulate;
 
 	if (IsMouseButtonPressed(0) && !GUI::mouseOverGui)
 	{
