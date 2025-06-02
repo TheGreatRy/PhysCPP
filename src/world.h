@@ -3,7 +3,11 @@
 #include "raylib.h"
 #include "scene.h"
 
+struct Spring;
+
 typedef std::vector<Body*> bodies_t;
+typedef std::vector<Spring*> springs_t;
+
 class World
 {
 public:
@@ -13,7 +17,7 @@ public:
 	Body* CreateBody(const Vector2& position, float size, const Color& color);
 	Body* CreateBody(const Body::Type& type, const Vector2& position,float mass, float size, const Color& color);
 
-	struct Spring* CreateSpring(Body* selectedBody, Body* connectedBody);
+	struct Spring* CreateSpring(Body* selectedBody, Body* connectedBody, float restLength, float stiffness);
 	void Step(float timeStep);
 	void Draw(const class Scene& scene);
 	void DestroyAll();
@@ -26,4 +30,5 @@ public:
 
 private:
 	bodies_t m_bodies;
+	springs_t m_springs;
 };

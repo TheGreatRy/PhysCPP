@@ -44,7 +44,7 @@ void GUI::Draw()
 		//World
 		GuiGroupBox(Rectangle{ worldAnchor.x + 0, worldAnchor.y + -8, 264, 96 }, "World");
 		GuiSliderBar(Rectangle{ springAnchor.x + 104, springAnchor.y + 104, 120, 16 }, "Gravitation", GUI_DATA(worldGravitation), 0, 100);
-		GuiSlider(Rectangle{ worldAnchor.x + 104, worldAnchor.y + 56, 120, 16 }, "Gravity", GUI_DATA(worldGravity), 0, 100);
+		GuiSlider(Rectangle{ worldAnchor.x + 104, worldAnchor.y + 56, 120, 16 }, "Gravity", GUI_DATA(worldGravity), -50, 50);
 		GuiSliderBar(Rectangle{ springAnchor.x + 104, springAnchor.y + 128, 120, 16 }, "Sp Multiplier", GUI_DATA(springMultiValue), 0, 100);
 		
 		if (GuiDropdownBox(Rectangle{ bodyAnchor.x + 104, bodyAnchor.y + 136, 120, 24 }, "Dynamic;Kinematic;Static", &bodyTypeOptions, editDropdownMode)) editDropdownMode = !editDropdownMode;
@@ -54,7 +54,7 @@ void GUI::Draw()
 }
 
 
-Body* GUI::GetBodyIntersect(const Vector2& position,const bodies_t& bodies, const SceneCamera& camera)
+Body* GUI::GetBodyIntersect(const Vector2& position, const bodies_t& bodies, const SceneCamera& camera)
 {
 	for (auto& body : bodies)
 	{

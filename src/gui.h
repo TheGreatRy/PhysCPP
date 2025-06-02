@@ -26,7 +26,7 @@ public:
 	inline static float bodyMass = 1.0f;
 	inline static float bodySize = 0.2f;
 	inline static float bodyDamping = 0.5f;
-	inline static float bodyRestitution = 0.0f;
+	inline static float bodyRestitution = 0.5f;
 	
 	//world values
 	inline static float worldGravity{ -9.81f };
@@ -36,6 +36,6 @@ public:
 	inline static float springDampingValue = 0.0f;
 
 	//buttons
-	inline static bool simulateActive = true;
+	inline static bool simulateActive = false;
 	inline static bool resetPressed = false;
 };
