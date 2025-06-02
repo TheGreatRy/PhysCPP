@@ -5,9 +5,14 @@
 
 #define GUI_DATA(data) TextFormat("%0.2f", data), &data
 
+void GUI::Initialize()
+{
+	GuiLoadStyle("../raygui/styles/jungle/style_jungle.rgs");
+}
+
 void GUI::Update()
 {
-    mouseOverGui = physicsWindowActive && CheckCollisionPointRec(GetMousePosition(), Rectangle{ windowAnchor.x + 0, windowAnchor.y + 0, 270, 385 });
+    mouseOverGui = physicsWindowActive && CheckCollisionPointRec(GetMousePosition(), Rectangle{ windowAnchor.x + 0, windowAnchor.y + 0, 270, 450 });
     if (IsKeyPressed(KEY_TAB)) physicsWindowActive = !physicsWindowActive;
 }
 
@@ -17,18 +22,37 @@ void GUI::Draw()
 
 	if (physicsWindowActive)
 	{
-		physicsWindowActive = !GuiWindowBox(Rectangle{ windowAnchor.x + 0, windowAnchor.y + 0, 270, 385 }, "Physics");
-		GuiSlider(Rectangle{ windowAnchor.x + 104, windowAnchor.y + 40, 120, 16 }, "BODY GRAVITY", GUI_DATA(bodyGravity), -50, 50);
-		if (GuiTextBox(Rectangle{ windowAnchor.x + 32, windowAnchor.y + 168, 72, 24 }, bodyTypeText, 128, bodyTypeTextEditMode)) bodyTypeTextEditMode = !bodyTypeTextEditMode;
-		GuiSlider(Rectangle{ windowAnchor.x + 104, windowAnchor.y + 72, 120, 16 }, "BODY MASS", GUI_DATA(bodyMass), 1, 500);
-		GuiSlider(Rectangle{ windowAnchor.x + 104, windowAnchor.y + 104, 120, 16 }, "BODY SIZE", GUI_DATA(bodySize), 0.01f, 10.0f);
-		GuiSlider(Rectangle{ windowAnchor.x + 104, windowAnchor.y + 136, 120, 16 }, "BODY DAMPING", GUI_DATA(bodyDamping), 0.001f, 10.0f);
-		GuiSlider(Rectangle{ windowAnchor.x + 104, windowAnchor.y + 328, 120, 16 }, "WORLD GRAVITY", GUI_DATA(worldGravity), -50.0f, 50.0f);
-		if (GuiDropdownBox(Rectangle{ windowAnchor.x + 104, windowAnchor.y + 168, 120, 24 }, "DYNAMIC; KINEMATIC; STATIC", &bodyTypeOptions, editDropdownMode)) editDropdownMode = !editDropdownMode;
-	}
+		physicsWindowActive = !GuiWindowBox(Rectangle{ windowAnchor.x + 0, windowAnchor.y + 0, 312, 472 }, "Physics");
 
+		GuiToggle(Rectangle{ windowAnchor.x + 24, windowAnchor.y + 432, 120, 24 }, "Simulate", &simulateActive);
+		resetPressed = GuiButton(Rectangle{ windowAnchor.x + 168, windowAnchor.y + 432, 120, 24 }, "Reset");
+
+		//Body
+		GuiGroupBox(Rectangle{ bodyAnchor.x + 0, bodyAnchor.y + 0, 264, 176 }, "Body");
+		GuiSliderBar(Rectangle{ bodyAnchor.x + 104, bodyAnchor.y + 16, 120, 16 }, "Mass", GUI_DATA(bodyMass), 0, 100);
+		GuiSliderBar(Rectangle{ bodyAnchor.x + 104, bodyAnchor.y + 40, 120, 16 }, "Size", GUI_DATA(bodySize), 0, 100);
+		GuiSliderBar(Rectangle{ bodyAnchor.x + 104, bodyAnchor.y + 64, 120, 16 }, "Gravity Scale", GUI_DATA(bodyGravityScale), 0, 100);
+		GuiSliderBar(Rectangle{ bodyAnchor.x + 104, bodyAnchor.y + 88, 120, 16 }, "Damping", GUI_DATA(bodyDamping), 0, 100);
+		GuiSliderBar(Rectangle{ bodyAnchor.x + 104, bodyAnchor.y + 112, 120, 16 }, "Restitution", GUI_DATA(bodyRestitution), 0, 100);
+		GuiLabel(Rectangle{ bodyAnchor.x + 32, bodyAnchor.y + 136, 120, 24 }, "Body Type");
+
+		//Spring
+		GuiGroupBox(Rectangle{ springAnchor.x + 0, springAnchor.y + 0, 264, 72 }, "Spring");
+		GuiSliderBar(Rectangle{ springAnchor.x + 104, springAnchor.y + 16, 120, 16 }, "Damping", GUI_DATA(springDampingValue), 0, 100);
+		GuiSliderBar(Rectangle{ springAnchor.x + 104, springAnchor.y + 40, 120, 16 }, "Stiffness",GUI_DATA(springStiffnessValue), 0, 100);
+		
+		//World
+		GuiGroupBox(Rectangle{ worldAnchor.x + 0, worldAnchor.y + -8, 264, 96 }, "World");
+		GuiSliderBar(Rectangle{ springAnchor.x + 104, springAnchor.y + 104, 120, 16 }, "Gravitation", GUI_DATA(worldGravitation), 0, 100);
+		GuiSlider(Rectangle{ worldAnchor.x + 104, worldAnchor.y + 56, 120, 16 }, "Gravity", GUI_DATA(worldGravity), 0, 100);
+		GuiSliderBar(Rectangle{ springAnchor.x + 104, springAnchor.y + 128, 120, 16 }, "Sp Multiplier", GUI_DATA(springMultiValue), 0, 100);
+		
+		if (GuiDropdownBox(Rectangle{ bodyAnchor.x + 104, bodyAnchor.y + 136, 120, 24 }, "Dynamic;Kinematic;Static", &bodyTypeOptions, editDropdownMode)) editDropdownMode = !editDropdownMode;
+
+	}
 	GuiUnlock();
 }
+
 
 Body* GUI::GetBodyIntersect(const Vector2& position,const bodies_t& bodies, const SceneCamera& camera)
 {

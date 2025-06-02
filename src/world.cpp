@@ -26,11 +26,18 @@ Body* World::CreateBody(const Body::Type& type, const Vector2& position,float ma
     return body;
 }
 
+Spring* World::CreateSpring(Body* selectedBody, Body* connectedBody)
+{
+    return nullptr;
+}
+
 void World::Step(float timeStep)
 {
     if (!simulate) return;
 
     if (gravitation > 0 ) ApplyGravitation(m_bodies, gravitation);
+
+    //apply spring forces
     
     for (auto body : m_bodies)
     {

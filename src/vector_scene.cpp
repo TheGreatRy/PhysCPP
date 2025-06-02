@@ -94,7 +94,7 @@ void VectorScene::Update()
 			float y = position.y;*/
 			body->velocity = Vector2{ x, y } *randomf(1, 6);
 			body->mass = GUI::bodyMass;
-			//body->gravityScale = bodyGravity;
+			body->gravityScale = GUI::bodyGravityScale;
 			body->damping = GUI::bodyDamping;
 			body->size = GUI::bodySize;
 
@@ -133,7 +133,7 @@ void VectorScene::FixedUpdate()
 	//apply forces
 	m_world->Step(Scene::fixedTimeStep);
 
-	ApplyGravitation(m_world->GetBodies(), GUI::bodyGravity);
+	ApplyGravitation(m_world->GetBodies(), GUI::worldGravitation);
 }
 
 void VectorScene::Draw()
