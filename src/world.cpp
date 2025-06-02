@@ -1,6 +1,7 @@
 #include "world.h"
 #include "gravitation.h"
 #include "spring.h"
+#include "collision.h"
 
 World::~World()
 {
@@ -51,6 +52,9 @@ void World::Step(float timeStep)
         body->Step(timeStep);
         body->ClearForce();
     }
+    /*if (!m_contacts.empty()) m_contacts.clear();
+    Collision::CreateContacts(m_bodies, m_contacts);
+    Collision::SeparateContacts(m_contacts);*/
 }
 
 void World::Draw(const Scene& scene)
@@ -75,5 +79,16 @@ void World::DestroyAll()
         {
             delete body;
         }
+        m_bodies.clear();
     }
+
+    if (!m_springs.empty())
+    {
+        for (auto spring : m_springs)
+        {
+            delete spring;
+        }
+        m_springs.clear();
+    }
+    
 }

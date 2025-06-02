@@ -15,7 +15,7 @@ void SpringScene::Initialize()
 	m_world->Initialize();
 	GUI::Initialize();
 
-#pragma region Enemies
+	#pragma region Enemies
 
 
 	/*Body* body = new Body(Vector2{ 3,0 }, Vector2{ 0 }, 0.25, WHITE);
@@ -45,7 +45,6 @@ void SpringScene::Update()
 	{
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) || IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsKeyDown(KEY_LEFT_SHIFT))
 		{
-			//change value to take in menu options
 			Vector2 position = m_camera->ScreenToWorld(GetMousePosition());
 			Body::Type type = static_cast<Body::Type>(GUI::bodyTypeOptions);
 
@@ -54,25 +53,17 @@ void SpringScene::Update()
 			body->damping = GUI::bodyDamping;
 			body->gravityScale = GUI::bodyGravityScale;
 
-			//body->ApplyForce(randomOnUnitCircle() * 20, Body::ForceMode::Velocity);
+			body->ApplyForce(randomOnUnitCircle() * 20, Body::ForceMode::Velocity);
 		}
 
-		if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
-		{
-			Vector2 position = m_camera->ScreenToWorld(GetMousePosition());
-			m_selectedBody = GUI::GetBodyIntersect(position, m_world->GetBodies(), *m_camera);
-
-		}
-
-
-		if (m_selectedBody)
+		else if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT) && m_selectedBody)
 		{
 			if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT) && IsKeyDown(KEY_LEFT_CONTROL))
 			{
 				if (m_selectedBody->type == Body::Type::Dynamic)
 				{
 					Vector2 position = m_camera->ScreenToWorld(GetMousePosition());
-					Spring::ApplyForce(position, *m_selectedBody, 0, 1);
+					Spring::ApplyForce(position, *m_selectedBody, 1, 1);
 				}
 			}
 			else if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
@@ -80,17 +71,23 @@ void SpringScene::Update()
 				Vector2 position = m_camera->ScreenToWorld(GetMousePosition());
 				m_connectedBody = GUI::GetBodyIntersect(position, m_world->GetBodies(), *m_camera);
 			}
-			else
-			{
-				if (m_selectedBody && m_connectedBody)
-				{
-					float distance = Vector2Distance(m_selectedBody->position, m_connectedBody->position);
-					m_world->CreateSpring(m_selectedBody, m_connectedBody, distance, 20);
-				}
-				m_selectedBody = nullptr;
-				m_connectedBody = nullptr;
-			}
+
 		}
+		else if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+		{
+			Vector2 position = m_camera->ScreenToWorld(GetMousePosition());
+			m_selectedBody = GUI::GetBodyIntersect(position, m_world->GetBodies(), *m_camera);
+
+		}
+		else if (m_selectedBody && m_connectedBody)
+		{
+			float distance = Vector2Distance(m_selectedBody->position, m_connectedBody->position);
+			m_world->CreateSpring(m_selectedBody, m_connectedBody, distance, GUI::springStiffnessValue);
+
+			m_selectedBody = nullptr;
+			m_connectedBody = nullptr;
+		}
+
 	}
 
 	//apply world gravity	
@@ -112,21 +109,21 @@ void SpringScene::Update()
 		if (body->position.x > 9)
 		{
 			body->position.x = 9;
-			body->velocity.x *= -body-> restitution;
+			body->velocity.x *= -body->restitution;
 		}
 
-		if (GUI::resetPressed) m_world->DestroyAll();
 	}
 
+	if (GUI::resetPressed) m_world->DestroyAll();
 
 }
 
 void SpringScene::FixedUpdate()
 {
+	ApplyGravitation(m_world->GetBodies(), GUI::worldGravitation);
 	//apply forces
 	m_world->Step(Scene::fixedTimeStep);
 
-	ApplyGravitation(m_world->GetBodies(), GUI::worldGravitation);
 }
 
 void SpringScene::Draw()
@@ -139,10 +136,8 @@ void SpringScene::Draw()
 
 	if (m_selectedBody)
 	{
-		DrawCircleLines(m_selectedBody->position, m_selectedBody->size, YELLOW, 5);
 		if (m_connectedBody)
 		{
-			DrawCircleLines(m_connectedBody->position, m_connectedBody->size, YELLOW, 5);
 			DrawLine(m_selectedBody->position, m_connectedBody->position, 3, GREEN);
 		}
 		else

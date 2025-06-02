@@ -32,8 +32,8 @@ public:
 	inline static float worldGravity{ -9.81f };
 	inline static float worldGravitation{ -9.81f };
 	inline static float springMultiValue{ 1.0f };
-	inline static float springStiffnessValue{ 0.0f };
-	inline static float springDampingValue = 0.0f;
+	inline static float springStiffnessValue{ 0.1f };
+	inline static float springDampingValue = 0.1f;
 
 	//buttons
 	inline static bool simulateActive = false;

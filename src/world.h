@@ -2,12 +2,15 @@
 #include <vector>
 #include "raylib.h"
 #include "scene.h"
+#include "contact.h"
+
 
 struct Spring;
 
 typedef std::vector<Body*> bodies_t;
 typedef std::vector<Spring*> springs_t;
 
+using contacts_t = std::vector<Contact>;
 class World
 {
 public:
@@ -31,4 +34,5 @@ public:
 private:
 	bodies_t m_bodies;
 	springs_t m_springs;
+	contacts_t m_contacts;
 };
