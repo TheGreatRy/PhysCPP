@@ -19,8 +19,8 @@ public:
 	void Initialize(Vector2 gravity = Vector2{ 0, -9.81f }, size_t poolSize = 30);
 	Body* CreateBody(const Vector2& position, float size, const Color& color);
 	Body* CreateBody(const Body::Type& type, const Vector2& position,float mass, float size, const Color& color);
-
 	struct Spring* CreateSpring(Body* selectedBody, Body* connectedBody, float restLength, float stiffness);
+
 	void Step(float timeStep);
 	void Draw(const class Scene& scene);
 	void DestroyAll();

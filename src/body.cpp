@@ -25,7 +25,7 @@ void Body::ApplyForce(const Vector2& force, ForceMode forceMode)
 	case Body::ForceMode::Force:
 		this->force += force;
 		break;
-	case Body::ForceMode::Impluse:
+	case Body::ForceMode::Impulse:
 		this->velocity += force * invMass;
 		break;
 	case Body::ForceMode::Velocity:

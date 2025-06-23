@@ -14,7 +14,7 @@ public:
 	enum class ForceMode
 	{
 		Force,
-		Impluse,
+		Impulse,
 		Velocity
 	};
 public:

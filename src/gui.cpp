@@ -31,8 +31,8 @@ void GUI::Draw()
 		//Body
 		GuiGroupBox(Rectangle{ bodyAnchor.x + 0, bodyAnchor.y + 0, 264, 176 }, "Body");
 		GuiSliderBar(Rectangle{ bodyAnchor.x + 104, bodyAnchor.y + 16, 120, 16 }, "Mass", GUI_DATA(bodyMass), 0, 100);
-		GuiSliderBar(Rectangle{ bodyAnchor.x + 104, bodyAnchor.y + 40, 120, 16 }, "Size", GUI_DATA(bodySize), 0, 100);
-		GuiSliderBar(Rectangle{ bodyAnchor.x + 104, bodyAnchor.y + 64, 120, 16 }, "Gravity Scale", GUI_DATA(bodyGravityScale), -50, 50);
+		GuiSliderBar(Rectangle{ bodyAnchor.x + 104, bodyAnchor.y + 40, 120, 16 }, "Size", GUI_DATA(bodySize), 0, 5);
+		GuiSliderBar(Rectangle{ bodyAnchor.x + 104, bodyAnchor.y + 64, 120, 16 }, "Gravity Scale", GUI_DATA(bodyGravityScale), -20, 20);
 		GuiSliderBar(Rectangle{ bodyAnchor.x + 104, bodyAnchor.y + 88, 120, 16 }, "Damping", GUI_DATA(bodyDamping), 0, 1);
 		GuiSliderBar(Rectangle{ bodyAnchor.x + 104, bodyAnchor.y + 112, 120, 16 }, "Restitution", GUI_DATA(bodyRestitution), 0, 1);
 		GuiLabel(Rectangle{ bodyAnchor.x + 32, bodyAnchor.y + 136, 120, 24 }, "Body Type");
@@ -44,8 +44,8 @@ void GUI::Draw()
 		
 		//World
 		GuiGroupBox(Rectangle{ worldAnchor.x + 0, worldAnchor.y + -8, 264, 96 }, "World");
-		GuiSliderBar(Rectangle{ springAnchor.x + 104, springAnchor.y + 104, 120, 16 }, "Gravitation", GUI_DATA(worldGravitation), -50, 50);
-		GuiSlider(Rectangle{ worldAnchor.x + 104, worldAnchor.y + 56, 120, 16 }, "Gravity", GUI_DATA(worldGravity), -50, 50);
+		GuiSliderBar(Rectangle{ springAnchor.x + 104, springAnchor.y + 104, 120, 16 }, "Gravitation", GUI_DATA(worldGravitation), -20, 20);
+		GuiSlider(Rectangle{ worldAnchor.x + 104, worldAnchor.y + 56, 120, 16 }, "Gravity", GUI_DATA(worldGravity), -20, 20);
 		GuiSliderBar(Rectangle{ springAnchor.x + 104, springAnchor.y + 128, 120, 16 }, "Sp Multiplier", GUI_DATA(springMultiValue), 0, 10);
 		
 		if (GuiDropdownBox(Rectangle{ bodyAnchor.x + 104, bodyAnchor.y + 136, 120, 24 }, "Dynamic;Kinematic;Static", &bodyTypeOptions, editDropdownMode)) editDropdownMode = !editDropdownMode;

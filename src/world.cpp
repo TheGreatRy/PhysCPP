@@ -52,9 +52,11 @@ void World::Step(float timeStep)
         body->Step(timeStep);
         body->ClearForce();
     }
-    /*if (!m_contacts.empty()) m_contacts.clear();
+
+    if (!m_contacts.empty()) m_contacts.clear();
     Collision::CreateContacts(m_bodies, m_contacts);
-    Collision::SeparateContacts(m_contacts);*/
+    Collision::SeparateContacts(m_contacts);
+    Collision::ResolveContacts(m_contacts);
 }
 
 void World::Draw(const Scene& scene)
