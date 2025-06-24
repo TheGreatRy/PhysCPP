@@ -15,7 +15,8 @@ void Body::Step(float dt)
 
 void Body::Draw(const Scene& scene)
 {
-	scene.DrawCircle(position, size, color);
+	if (type == Type::Kinematic) scene.DrawRectangle(position, size, color);
+	else scene.DrawCircle(position, size.x, color);
 }
 
 void Body::ApplyForce(const Vector2& force, ForceMode forceMode)

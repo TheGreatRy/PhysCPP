@@ -18,7 +18,7 @@ void Scene::BeginDraw()
 {
 	BeginDrawing();
 	ClearBackground(m_background);
-	DrawFPS(20, 20);
+	//DrawFPS(20, 20);
 }
 
 void Scene::EndDraw()
@@ -49,6 +49,11 @@ void Scene::DrawText(const std::string& text, const Vector2& world, int fontSize
 void Scene::DrawCircle(const Vector2& world, float radius, const Color& color) const
 {
 	DrawCircleV(m_camera->WorldToScreen(world), m_camera->WorldToScreen(radius), color);
+}
+
+void Scene::DrawRectangle(const Vector2& world, const Vector2& size, const Color& color) const
+{
+	DrawRectangleV(m_camera->WorldToScreen(world), size, color);
 }
 
 void Scene::DrawCircleLines(const Vector2& world, float radius, const Color& color, int pixels) const

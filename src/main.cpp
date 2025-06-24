@@ -15,6 +15,7 @@ by Jeffery Myers is marked with CC0 1.0. To view a copy of this license, visit h
 #include "vector_scene.h"
 #include "polar_scene.h"
 #include "spring_scene.h"
+#include "game_scene.h"
 
 int main ()
 {
@@ -41,7 +42,8 @@ int main ()
 
 	//TrigScene* scene = new TrigScene("Trig", windowWidth, windowHeight);
 	//VectorScene* scene = new VectorScene("Vector", windowWidth, windowHeight);
-	SpringScene* scene = new SpringScene("Spring", windowWidth, windowHeight);
+	//SpringScene* scene = new SpringScene("Spring", windowWidth, windowHeight);
+	GameScene* scene = new GameScene("Game", windowWidth, windowHeight);
 
 	//PolarScene* scene = new PolarScene("Polar", windowWidth, windowHeight);
 	scene->Initialize();

@@ -96,7 +96,7 @@ void VectorScene::Update()
 			body->mass = GUI::bodyMass;
 			body->gravityScale = GUI::bodyGravityScale;
 			body->damping = GUI::bodyDamping;
-			body->size = GUI::bodySize;
+			body->size.x = GUI::bodySize;
 
 			m_world->gravity.y = GUI::worldGravity;
 		}

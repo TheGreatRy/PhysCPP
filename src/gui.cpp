@@ -59,7 +59,7 @@ Body* GUI::GetBodyIntersect(const Vector2& position, const bodies_t& bodies, con
 {
 	for (auto& body : bodies)
 	{
-		if (CheckCollisionPointCircle(position, body->position, body->size)) return body;
+		if (CheckCollisionPointCircle(position, body->position, body->size.x)) return body;
 	}
     return nullptr;
 }

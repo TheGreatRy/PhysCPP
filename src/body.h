@@ -28,7 +28,18 @@ public:
 		size{size},
 		color{color}
 	{}
+	Body(const Vector2& position, const Vector2& velocity, const Vector2& size, const Color& color):
+		position{position},
+		velocity{velocity},
+		size{size},
+		color{color}
+	{}
 	Body(const Vector2& position, float size, const Color& color):
+		position{position},
+		size{size},
+		color{color}
+	{}
+	Body(const Vector2& position, const Vector2& size, const Color& color):
 		position{position},
 		size{size},
 		color{color}
@@ -43,12 +54,22 @@ public:
 		invMass = (type == Type::Dynamic && mass != 0) ? 1 / mass : 0;
 	}
 
+	Body(const Type& type, const Vector2& position, float mass, const Vector2& size, const Color& color):
+		type{type},
+		position{position},
+		mass{mass},
+		size{size},
+		color{color}
+	{
+		invMass = (type == Type::Dynamic && mass != 0) ? 1 / mass : 0;
+	}
+
 	void Step(float dt);
 	void Draw(const Scene& scene);
 
 	void ApplyForce(const Vector2& force, ForceMode forceMode = ForceMode::Force);
 	void ClearForce(){ force = Vector2{ 0,0 }; }
-	AABB GetAABB() const { return AABB{ position, { size * 2, size * 2 } }; }
+	AABB GetAABB() const { return AABB{ position, { size.x * 2, size.y * 2 } }; }
 
 public:
 	Vector2 position{ 0,0 };
@@ -61,7 +82,7 @@ public:
 
 	float gravityScale{ 1 };
 
-	float size{ 1 };
+	Vector2 size{ 1,1 };
 	float damping{ 0.1f };
 	float restitution{ 0.0f };
 	Color color{ WHITE };

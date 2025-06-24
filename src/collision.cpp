@@ -6,7 +6,7 @@
 bool Intersects(Body* bodyA, Body* bodyB)
 {
 	float distance = Vector2Distance(bodyA->position, bodyB->position);
-	float radius = bodyA->size + bodyB->size;
+	float radius = bodyA->size.x + bodyB->size.x;
 
 	return (distance <= radius);
 }
@@ -36,7 +36,7 @@ void Collision::CreateContacts(const bodies_t& bodies, contacts_t& contacts)
 				}
 
 				float distance = sqrtf(distanceSqr);
-				float radius = bodyA->size + bodyB->size;
+				float radius = bodyA->size.x + bodyB->size.x;
 				contact.depth = radius - distance;
 				contact.normal = direction / distance;
 				contact.restitution = (bodyA->restitution + bodyB->restitution) / 2;

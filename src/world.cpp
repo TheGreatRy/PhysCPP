@@ -28,6 +28,13 @@ Body* World::CreateBody(const Body::Type& type, const Vector2& position,float ma
     return body;
 }
 
+Body* World::CreateBody(const Body::Type& type, const Vector2& position, float mass, const Vector2& size, const Color& color)
+{
+    Body* body = new Body(type, position, mass, size, color);
+    m_bodies.push_back(body);
+    return body;
+}
+
 Spring* World::CreateSpring(Body* selectedBody, Body* connectedBody, float restLength, float stiffness)
 {
     Spring* spring = new Spring(selectedBody, connectedBody, restLength, stiffness);
@@ -94,3 +101,4 @@ void World::DestroyAll()
     }
     
 }
+
