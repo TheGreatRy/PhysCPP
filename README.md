@@ -4,11 +4,19 @@ A physics based engine that builds upon the raylib library and utilizes the rayg
 ## Features
 This physics engine allows the creation of various body types with different parameters. It also allows spring creation between bodies with adjustable properties and reflect physics-based movement. Users are allowed to reset the scene, start and pause the simulation, and hide/unhide the settings window. There are individual settings for each body as well as global settings that can be applied
 
+![image](https://github.com/user-attachments/assets/c664dda6-e39e-47f3-ba73-dec2741f0dc8)
+
 ### Keyboard and Mouse Inputs
 - Hide/Unhide Settings: TAB
 - Create Body: Left Click
-- Create Spring: Right Click on the two bodies you want to create a spring between
+- Continuous Spawn: Left Click + Left Shift
+- Select Body: Right Click
+- Create Spring: Select Two Bodies
+- Apply Spring Force: Select Body, then Right Click + Left CTRL
 - Close Simulation Window: ESC
+
+![image](https://github.com/user-attachments/assets/ee7cb596-2b20-44ea-bc86-a57f4dbdb290)
+
 
 ### Core Simulation
 - Implements three types of physical bodies:
@@ -28,6 +36,8 @@ This physics engine allows the creation of various body types with different par
   - Stiffness (spring constant)
   - Damping
 
+![image](https://github.com/user-attachments/assets/5b168068-4e07-4926-b2d8-861aa918dd05)
+
 ### GUI Features
 - The GUI includes the ability to:
   - Add objects of each body type.
@@ -40,3 +50,6 @@ This physics engine allows the creation of various body types with different par
   - Control simulation flow:
     - Start/Stop Simulation
     - Reset Simulation (clears all objects and springs)
+   
+![image](https://github.com/user-attachments/assets/c681ce75-3961-4d87-ba5b-466efccad27b)
+
